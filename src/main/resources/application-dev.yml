@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    name: Montessori DB MySQL connection
+    url: jdbc:mysql://localhost:3306/MontessoriSchool?useSSL=false&serverTimezone=CET&allowPublicKeyRetrieval=true&useUnicode=true
+    username: root
+    password: jovan
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true # default=false
+# TODO:
+#    hibernate:
+#      ddl-auto: update # Automatically create or update tables
+
+# TODO: when implementing caching mechanism
+#  cache:
+#    type: redis
+#  redis:
+#    host: localhost
+#    port: 6379
+
+server:
+  port: 8080

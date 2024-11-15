@@ -1,0 +1,21 @@
+version: '3.2'
+
+services:
+  # Java APP (Spring Boot)
+  academy-srv:
+    build:
+      dockerfile: Dockerfile
+    image: jovanvukovicc/dedis111:1.0.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./conf:/config
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    restart: on-failure
+    container_name: academy_srv
+    networks:
+      - academynet
+
+networks:
+  academynet:

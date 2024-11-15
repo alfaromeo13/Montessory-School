@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: Montessori School
+
+  # active profile when app is running
+  profiles:
+    active: dev
+
+  # maximum allowed size per uploaded file
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+  # email configuration
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jovanvukovic09@gmail.com
+    password: ctrnwzthugudhizm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+
+# TODO: zakucacemo username i password administratora sajta ovdje
+
+# TODO: when doing jwt for Administrator of webpage
+#jwt:
+#  secret:  bjskdbvojbdvBVOUbdvjdbVodbvubdVUObdJBVueBosjVBweuVOIEWVBVBNOEWIVGUEGGGggsvbdvdjVWIOEVBOEIvsbvsjbdieuvhe
+#  validityInMinutes: 15 # 15min
+#  refreshValidityInMinutes: 43200 # 30days
+
+# TODO: check if needed when deploying on render.
+#spring.application.name=dedis
+#server.tomcat.max-threads=50  # Lower default is 200
+#server.tomcat.min-spare-threads=10  # Lower default is 10
