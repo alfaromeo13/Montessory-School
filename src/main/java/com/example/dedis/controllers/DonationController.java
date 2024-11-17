@@ -1,6 +1,7 @@
-package com.example.dedis.controller;
+package com.example.dedis.controllers;
 
 
+import com.example.dedis.services.DonationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/donation")
 public class DonationController {
+
+    private final DonationService donationService;
 
     //TODO: donate API
 }

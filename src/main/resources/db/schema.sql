@@ -5,18 +5,18 @@ DROP TABLE IF EXISTS
     Event,
     Image,
     Donation,
-    Static_Pages;
+    Static_Page;
 
 -- Create table for parents of children
 CREATE TABLE Parent (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
 -- Create the Child_Registration table
 CREATE TABLE Child (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    parent_id INT NOT NULL, -- Foreign key to the parent
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    parent_id BIGINT NOT NULL, -- Foreign key to the parent
     name VARCHAR(255) NOT NULL,
     surname VARCHAR(255) NOT NULL,
     date_of_birth DATE NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Child (
 
 -- Create the Event table
 CREATE TABLE Event (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     event_date DATETIME NULL,
@@ -52,10 +52,10 @@ CREATE TABLE Event (
 
 -- Create the Image table
 CREATE TABLE Image (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     file_path VARCHAR(255) NOT NULL,
     description TEXT NULL,
-    event_id INT NOT NULL,
+    event_id BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (event_id) REFERENCES Event(id) ON DELETE CASCADE
@@ -63,7 +63,7 @@ CREATE TABLE Image (
 
 -- Create the Donation table
 CREATE TABLE Donation (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     donor_name VARCHAR(255) NULL,
     donor_email VARCHAR(255) NULL,
     amount DECIMAL(10,2) NOT NULL,
@@ -72,8 +72,8 @@ CREATE TABLE Donation (
 );
 
 -- Create the Static_Pages table
-CREATE TABLE Static_Pages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE Static_Page (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     page_name VARCHAR(255) UNIQUE NOT NULL,
     content JSON NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
