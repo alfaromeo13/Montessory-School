@@ -12,5 +12,7 @@ public class StaticPagesController {
 
     private final StaticPageService staticPageService;
 
-    //TODO: retrieve content API
+    //TODO: retrieve content API. Dodaj Kesiranje contenta
+    // DODAJ DA KADA ADMINISTRATOR KREIRA EVENT NEKI da se eviktuje sve? Znaci moras ispratiti kad ces raditi evict
+
 }

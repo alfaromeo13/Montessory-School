@@ -10,21 +10,6 @@ spring:
 #    hibernate:
 #      ddl-auto: update  # Automatically create or update tables based on entities
 
-
-# TODO: implement caching
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        cache: # we enable caching mechanism (2nd level cache)
-#          use_second_level_cache: true
-#          use_query_cache: true
-#          region:
-#            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
-#        javax:
-#          cache:
-#            provider: "org.ehcache.jsr107.EhcacheCachingProvider"
-#            missing_cache_strategy: create
-
   sql:
     init:
       mode: always

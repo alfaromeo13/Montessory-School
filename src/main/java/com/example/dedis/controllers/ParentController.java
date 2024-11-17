@@ -15,4 +15,7 @@ public class ParentController {
     private final ChildService childService;
 
     // TODO: register kid API + send email of successful registration
+    // znaci registruj roditelja ako ga vec nema sa tim id-em u bazi
+
+
 }

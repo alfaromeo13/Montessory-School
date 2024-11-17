@@ -25,9 +25,6 @@ spring:
           starttls:
             enable: true
 
-
-# TODO: zakucacemo username i password administratora sajta ovdje
-
 # TODO: when doing jwt for Administrator of webpage
 #jwt:
 #  secret:  bjskdbvojbdvBVOUbdvjdbVodbvubdVUObdJBVueBosjVBweuVOIEWVBVBNOEWIVGUEGGGggsvbdvdjVWIOEVBOEIvsbvsjbdieuvhe
