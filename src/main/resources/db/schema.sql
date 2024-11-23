@@ -53,12 +53,11 @@ CREATE TABLE Event (
 -- Create the Image table
 CREATE TABLE Image (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    file_path VARCHAR(255) NOT NULL,
+    url TEXT NOT NULL,
     description TEXT NULL,
     event_id BIGINT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (event_id) REFERENCES Event(id) ON DELETE CASCADE
+    FOREIGN KEY (event_id) REFERENCES Event(id) ON DELETE CASCADE,
+    INDEX (event_id) --  We plan to query images by event_id frequently, we add an index to improve query performance.
 );
 
 -- Create the Donation table

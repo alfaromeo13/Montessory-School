@@ -25,6 +25,11 @@ spring:
           starttls:
             enable: true
 
+server: # admins session will last 20 minute once he is logged in
+  servlet:
+    session:
+      timeout: 20m
+
 # TODO: when doing jwt for Administrator of webpage
 #jwt:
 #  secret:  bjskdbvojbdvBVOUbdvjdbVodbvubdVUObdJBVueBosjVBweuVOIEWVBVBNOEWIVGUEGGGggsvbdvdjVWIOEVBOEIvsbvsjbdieuvhe

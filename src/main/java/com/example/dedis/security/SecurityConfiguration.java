@@ -22,6 +22,10 @@ public class SecurityConfiguration {
 
     private final UnauthorizedHttpEntryPoint unauthorizedHttpEntryPoint;
 
+    /*
+    We use a lightweight in-memory store provided by Spring Security to store admin authentication details during
+    runtime. Passwords are hashed using BCrypt, ensuring they cannot be reversed or read in plaintext.
+     */
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails admin = User.withUsername("admin")
@@ -35,11 +39,18 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    //TODO: Vidji kako ovo radi i je li ovo sesija?
+    /*
+    When using sessions, authentication is tied to a session ID stored in the browser as a cookie on client side.
+    Browsers automatically include cookies in requests. The backend creates and manages sessions for authentication,
+
+    CSRF protection is essential to prevent unauthorized actions. it's enabled by default in Spring Security
+    Upon successful authentication (user logs in using the form) the user's details are stored in the session.
+    The session is managed server-side, allowing the user to access protected resources without re-authenticating until
+    the session expires. I specified in application.yml session timeout time.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(auth -> auth
+        return  http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/**").authenticated()
                         .anyRequest().permitAll())
                 .formLogin(httpSecurityFormLoginConfigurer -> {}).build();
