@@ -1,6 +1,7 @@
 package com.example.dedis.security.controller;
 
 import com.example.dedis.excel.ExcelGeneratorUtility;
+import com.example.dedis.services.AdminService;
 import com.example.dedis.services.ChildService;
 import com.example.dedis.services.EventService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import java.util.Date;
 public class AdminController {
 
     private final EventService eventService;
+    private final AdminService adminService;
     private final ChildService childService;
 
     /*TODO: add events (blogs)

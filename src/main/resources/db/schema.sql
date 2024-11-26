@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS
     Child,
     Event,
     Image,
-    Donation,
-    Static_Page;
+    Admin,
+    Donation;
 
 -- Create table for parents of children
 CREATE TABLE Parent (
@@ -33,7 +33,7 @@ CREATE TABLE Child (
         '8th grade',
         '9th grade'
     ) NOT NULL,
-    gender ENUM('Boy', 'Girl') NOT NULL,
+    gender ENUM('Boy', 'Girl', 'Others' , 'Prefer not to say') NOT NULL,
     address TEXT NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     city VARCHAR(255) NOT NULL,
@@ -63,18 +63,17 @@ CREATE TABLE Image (
 -- Create the Donation table
 CREATE TABLE Donation (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    donor_name VARCHAR(255) NULL,
+    donor_name VARCHAR(255) DEFAULT 'Anonymous',
     donor_email VARCHAR(255) NULL,
     amount DECIMAL(10,2) NOT NULL,
     message TEXT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create the Static_Pages table
-CREATE TABLE Static_Page (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    page_name VARCHAR(255) UNIQUE NOT NULL,
-    content JSON NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+CREATE TABLE Admin (
+   id BIGINT AUTO_INCREMENT PRIMARY KEY,
+   username VARCHAR(255) NOT NULL,
+   password VARCHAR(255) NOT NULL, -- Hashed password (bcrypt hash)
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Timestamp of creation
+   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- Timestamp of last update
 );

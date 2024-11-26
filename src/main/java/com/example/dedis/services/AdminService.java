@@ -1,12 +1,12 @@
 package com.example.dedis.services;
 
-import com.example.dedis.repositories.StaticPageRepository;
+import com.example.dedis.repositories.AdminRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class StaticPageService {
+public class AdminService {
 
-    private final StaticPageRepository staticPageRepository;
+    private final AdminRepository adminRepository;
 }
