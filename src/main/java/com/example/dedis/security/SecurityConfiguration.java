@@ -1,7 +1,5 @@
 package com.example.dedis.security;
 
-import com.example.dedis.repositories.AdminRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

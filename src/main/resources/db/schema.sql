@@ -1,20 +1,20 @@
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS
-    Parent,
-    Child,
-    Event,
-    Image,
-    Admin,
-    Donation;
+    parent,
+    child,
+    event,
+    image,
+    admin,
+    donation;
 
 -- Create table for parents of children
-CREATE TABLE Parent (
+CREATE TABLE parent (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL
 );
 
--- Create the Child_Registration table
-CREATE TABLE Child (
+-- Create the child registration table
+CREATE TABLE child (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     parent_id BIGINT NOT NULL, -- Foreign key to the parent
     name VARCHAR(255) NOT NULL,
@@ -38,11 +38,11 @@ CREATE TABLE Child (
     postal_code VARCHAR(20) NOT NULL,
     city VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (parent_id) REFERENCES Parent(id) ON DELETE CASCADE
+    FOREIGN KEY (parent_id) REFERENCES parent(id) ON DELETE CASCADE
 );
 
--- Create the Event table
-CREATE TABLE Event (
+-- Create the event table
+CREATE TABLE event (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
@@ -50,18 +50,18 @@ CREATE TABLE Event (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Create the Image table
-CREATE TABLE Image (
+-- Create the image table
+CREATE TABLE image (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     url TEXT NOT NULL,
     description TEXT NULL,
     event_id BIGINT NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES Event(id) ON DELETE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,
     INDEX (event_id) --  We plan to query images by event_id frequently, we add an index to improve query performance.
 );
 
--- Create the Donation table
-CREATE TABLE Donation (
+-- Create the donation table
+CREATE TABLE donation (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     donor_name VARCHAR(255) DEFAULT 'Anonymous',
     donor_email VARCHAR(255) NULL,
@@ -70,7 +70,8 @@ CREATE TABLE Donation (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Admin (
+-- table for admin info
+CREATE TABLE admin (
    id BIGINT AUTO_INCREMENT PRIMARY KEY,
    username VARCHAR(255) NOT NULL,
    password VARCHAR(255) NOT NULL, -- Hashed password (bcrypt hash)

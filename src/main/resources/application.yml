@@ -30,12 +30,6 @@ server: # admins session will last 20 minute once he is logged in
     session:
       timeout: 20m
 
-# TODO: when doing jwt for Administrator of webpage
-#jwt:
-#  secret:  bjskdbvojbdvBVOUbdvjdbVodbvubdVUObdJBVueBosjVBweuVOIEWVBVBNOEWIVGUEGGGggsvbdvdjVWIOEVBOEIvsbvsjbdieuvhe
-#  validityInMinutes: 15 # 15min
-#  refreshValidityInMinutes: 43200 # 30days
-
 # TODO: check if needed when deploying on render.
 #spring.application.name=dedis
 #server.tomcat.max-threads=50  # Lower default is 200
