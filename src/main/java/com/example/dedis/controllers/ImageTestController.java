@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/image-test")
+@RequestMapping("/api/image")
 public class ImageTestController {
 
     private final ImageService imageService;
