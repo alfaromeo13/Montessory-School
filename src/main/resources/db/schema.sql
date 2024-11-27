@@ -33,7 +33,7 @@ CREATE TABLE child (
         '8th grade',
         '9th grade'
     ) NOT NULL,
-    gender ENUM('Boy', 'Girl', 'Others' , 'Prefer not to say') NOT NULL,
+    gender ENUM('Boy', 'Girl', 'Other' , 'Prefer not to say') NOT NULL,
     address TEXT NOT NULL,
     postal_code VARCHAR(20) NOT NULL,
     city VARCHAR(255) NOT NULL,

@@ -6,11 +6,26 @@ spring:
   profiles:
     active: dev
 
-  # maximum allowed size per uploaded file
+# to configure aws s3 bucket for image storage
+cloud:
+  aws:
+    credentials:
+      access-key:
+      secret-key:
+    region:
+      static: eu-north-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: dedis
+
+  # maximum allowed size of image per upload
   servlet:
     multipart:
-      max-file-size: 50MB
-      max-request-size: 50MB
+      max-file-size: 5MB
+      max-request-size: 5MB
 
   # email configuration
   mail:
