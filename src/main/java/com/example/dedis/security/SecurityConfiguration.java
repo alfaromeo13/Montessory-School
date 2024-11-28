@@ -36,9 +36,9 @@ public class SecurityConfiguration {
         return  http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/**").authenticated() // Restrict admin endpoints
+//                        .requestMatchers("/api/admin/**").authenticated() // Restrict admin endpoints
                         .anyRequest().permitAll()) // Allow all other endpoints
-                .formLogin(httpSecurityFormLoginConfigurer -> {}) // Enable default login page
+//                .formLogin(httpSecurityFormLoginConfigurer -> {}) // Enable default login page TODO: remove
                 .build();
     }
 }

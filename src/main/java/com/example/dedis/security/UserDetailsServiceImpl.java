@@ -28,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // Return UserDetails with username and password
         return User.builder()
                 .username(admin.getUsername())
-                .password(admin.getPassword()) // Password should be encoded in the database
+                .password(admin.getPassword()) // Password is encoded and stored such in database
                 .build();
     }
 }

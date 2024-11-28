@@ -34,9 +34,8 @@ public class AdminController {
        overwrite existing one with specific id and content body
      */
 
-    // API which exports all kids in an Excel file.
     @SneakyThrows
-    @GetMapping("excel")
+    @GetMapping("excel") // API which exports all kids in an Excel file.
     public void childrenDetailsReport(HttpServletResponse response) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         String fileType = "attachment; filename=children_details_" + dateFormat.format(new Date()) + ".xls";

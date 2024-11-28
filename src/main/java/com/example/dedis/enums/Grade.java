@@ -1,14 +1,14 @@
 package com.example.dedis.enums;
 
 public enum Grade {
-        Kindergarten,
-        First_Grade,
-        Second_Grade,
-        Third_Grade,
-        Fourth_Grade,
-        Fifth_Grade,
-        Sixth_Grade,
-        Seventh_Grade,
-        Eighth_Grade,
-        Ninth_Grade
+        KINDERGARTEN,
+        FIRST_GRADE,
+        SECOND_GRADE,
+        THIRD_GRADE,
+        FOURTH_GRADE,
+        FIFTH_GRADE,
+        SIXTH_GRADE,
+        SEVENTH_GRADE,
+        EIGHTH_GRADE,
+        NINTH_GRADE
 }

@@ -5,6 +5,8 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
+import com.example.dedis.entities.Event;
+import com.example.dedis.entities.Image;
 import com.example.dedis.repositories.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,19 @@ public class ImageService {
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj)); // sends file to bucket
         var f = fileObj.delete();
-        // TODO: save file in DB with imageRepository
+        String URL = "https://" + bucketName + ".s3.eu-north-1.amazonaws.com/"+fileName;
+
+        //TODO: make everything below in the method better
+        Event e = new Event();
+        e.setId(1L);
+
+        Image image = new Image();
+        image.setUrl(URL);
+        image.setEvent(e);
+        image.setDescription("AAAAA");
+
+        imageRepository.save(image);
+
         return "File uploaded : " + fileName;
     }
 
