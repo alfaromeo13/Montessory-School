@@ -22,5 +22,5 @@ public class Event {
     private LocalDateTime eventDate;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }

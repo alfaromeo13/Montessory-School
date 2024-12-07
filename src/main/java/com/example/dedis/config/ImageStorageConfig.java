@@ -8,8 +8,10 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Description;
 
 @Configuration
+@Description("AWS S3 bucket configuration")
 public class ImageStorageConfig {
 
     @Value("${cloud.aws.credentials.access-key}")
