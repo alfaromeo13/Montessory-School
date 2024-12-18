@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS
     parent,
     child,
     event,
-    image,
     admin,
     donation;
 
@@ -44,20 +43,9 @@ CREATE TABLE child (
 -- Create the event table
 CREATE TABLE event (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
+    content_blocks JSON NOT NULL,
     event_date DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create the image table
-CREATE TABLE image (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    url TEXT NOT NULL,
-    description TEXT NULL,
-    event_id BIGINT NOT NULL,
-    FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE,
-    INDEX (event_id) --  We plan to query images by event_id frequently, we add an index to improve query performance.
 );
 
 -- Create the donation table

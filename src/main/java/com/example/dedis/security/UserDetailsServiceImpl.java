@@ -1,6 +1,5 @@
 package com.example.dedis.security;
 
-import com.example.dedis.entities.Admin;
 import com.example.dedis.repositories.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
 
         // We fetch admin by username
-        Admin admin = adminRepository.findByUsername(username);
+        var admin = adminRepository.findByUsername(username);
 
         if (admin == null) {
             throw new UsernameNotFoundException("Admin not found with username: " + username);

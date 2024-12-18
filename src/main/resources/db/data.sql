@@ -20,8 +20,54 @@ VALUES
 
 -- Inserting dummy data into the event table
 
-INSERT INTO event (title, description, event_date)
+INSERT INTO event (content_blocks, event_date)
 VALUES
-    ('Spring field trip', 'A celebration of spring with live music, food stalls, and games for all ages.', '2024-04-15 10:00:00'),
-    ('School Anniversary', 'A two-day conference featuring industry leaders discussing the latest trends in technology and innovation.', '2024-05-20 09:00:00');
-
+    (
+        '
+        {
+            "title": "School celebration!",
+            "contentBlocks": [
+                { "type": "text", "value": "Join us for a celebration of spring with live music, food stalls, and games for all ages." },
+                {
+                    "type": "image",
+                    "values": [
+                        "https://dedis.s3.eu-north-1.amazonaws.com/field_trip.jpg"
+                    ],
+                    "imageCount" : 1
+                },
+                { "type": "text", "value": "The event will take place at Central Park starting at 10 AM." },
+                { "type": "image",
+                  "values": [
+                        "https://dedis.s3.eu-north-1.amazonaws.com/central_park.jpg"
+                  ],
+                    "imageCount" : 1
+                }
+            ]
+        }',
+        '2024-04-15 10:00:00'
+    ),
+    (
+    '
+    {
+    "title": "School anniversary",
+    "contentBlocks": [
+        {"type": "text", "value": "Join us for our school''s annual anniversary event celebrating achievements and milestones."},
+        {
+              "type": "image",
+              "values": [
+              "https://dedis.s3.eu-north-1.amazonaws.com/570-school-anniversary-46189998.jpg"
+              ],
+              "imageCount" : 1
+        },
+        {"type": "text", "value": "There will be speeches, performances, and a gala dinner to close the evening."},
+        {
+              "type": "image",
+              "value": [
+              "https://dedis.s3.eu-north-1.amazonaws.com/charisma-624032-4268904918.jpg"
+              ],
+              "imageCount" : 1
+        }
+    ]
+}',
+        '2024-05-20 09:00:00'
+);

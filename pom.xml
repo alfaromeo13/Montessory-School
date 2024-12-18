@@ -129,13 +129,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- Google Guava Cache (in memory temporary storage) -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>${google.guava-version}</version>
-        </dependency>
-
     </dependencies>
     <build>
         <plugins>

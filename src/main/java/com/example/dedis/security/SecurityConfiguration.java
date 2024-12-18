@@ -18,7 +18,7 @@ public class SecurityConfiguration {
 
     private final UnauthorizedHttpEntryPoint unauthorizedHttpEntryPoint;
 
-    @Bean
+    @Bean // Manages the authentication process.
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
@@ -29,28 +29,22 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    @Bean // gazimo predefinisane vrijednosti sa nasim beanom.
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
     }
 
-    /*
-    When using sessions, authentication is tied to a session ID stored in the browser as a cookie on client side.
-    Browsers automatically include cookies in requests. The backend creates and manages sessions for authentication
-    Upon successful authentication (user logs in using the form) the user's details are stored in the session.
-    The session is managed server-side, allowing the user to access protected resources without re-authenticating until
-    the session expires. I specified in application.yml session timeout time.
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return  http
-                .csrf(AbstractHttpConfigurer::disable) // todo: enable in production
+        return http
+                .csrf(AbstractHttpConfigurer::disable) // Enable this in production with proper configuration
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/login").permitAll()
-                        .requestMatchers("/api/admin/**").authenticated() // Restrict admin endpoints
-                        .anyRequest().permitAll()) // Allow all other endpoints
+                        .requestMatchers("/api/admin/").permitAll()
+                        //.requestMatchers("/api/admin/**").authenticated() // Protect other admin endpoints
+                        .anyRequest().permitAll())
                 .exceptionHandling(authEntry -> authEntry.authenticationEntryPoint(unauthorizedHttpEntryPoint))
-                .sessionManagement(session -> session.sessionFixation().migrateSession()) // Prevent session fixation
+                .sessionManagement(session -> session.sessionFixation().migrateSession())
                 .build();
     }
 }
