@@ -1,5 +1,8 @@
 package com.example.dedis.security;
 
+import com.example.dedis.security.components.UnauthorizedHttpEntryPoint;
+import com.example.dedis.security.components.UserDetailsServiceImpl;
+import com.example.dedis.security.jwt.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,15 +10,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
+    private final JwtFilter jwtFilter;
     private final UnauthorizedHttpEntryPoint unauthorizedHttpEntryPoint;
 
     @Bean // Manages the authentication process.
@@ -39,12 +45,12 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable) // Enable this in production with proper configuration
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/login").permitAll()
-                        .requestMatchers("/api/admin/").permitAll()
-                        //.requestMatchers("/api/admin/**").authenticated() // Protect other admin endpoints
+                        .requestMatchers("/api/admin/login").permitAll() // login available to anyone
+                        .requestMatchers("/api/admin/**").authenticated() // Protect other admin endpoints
                         .anyRequest().permitAll())
                 .exceptionHandling(authEntry -> authEntry.authenticationEntryPoint(unauthorizedHttpEntryPoint))
-                .sessionManagement(session -> session.sessionFixation().migrateSession())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 }

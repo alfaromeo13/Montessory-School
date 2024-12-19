@@ -5,11 +5,11 @@ import com.example.dedis.entities.Event;
 import com.example.dedis.excel.ExcelGeneratorUtility;
 import com.example.dedis.projections.EventProjection;
 import com.example.dedis.security.dto.LoginDTO;
+import com.example.dedis.security.jwt.JwtTokenProvider;
 import com.example.dedis.services.AdminService;
 import com.example.dedis.services.ChildService;
 import com.example.dedis.services.EventService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -38,7 +38,7 @@ public class AdminController {
     private final EventService eventService;
     private final AdminService adminService;
     private final ChildService childService;
-
+    private final JwtTokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
 
     // TODO:
@@ -49,22 +49,21 @@ public class AdminController {
 
     @PostMapping("login")
     public ResponseEntity<String> login(@RequestBody LoginDTO login) {
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
-            // this does all background logic for us. Checks user password with BCrypt
+        try {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(
+                    login.getUsername(),
+                    login.getPassword()
+            );
+
+            // this does all background logic for us. Checks users password with BCrypt
             Authentication auth = authenticationManager.authenticate(authentication);
             log.info("Authentication after successful login: {}", auth);
-            return ResponseEntity.ok("Authentication successful.");
-    }
-
-    // Logout endpoint to invalidate session and clear authentication context.
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
-        // Spring Security guarantees this point is reached only if the user is authenticated
-        request.getSession().invalidate();  // Invalidate the session
-        SecurityContextHolder.clearContext(); // Clear the SecurityContext
-        log.info("User successfully logged out");
-        return ResponseEntity.ok("Logout successful.");
+            String JWT = tokenProvider.generateToken(auth);
+            return ResponseEntity.ok(JWT);
+        } catch (Exception e) {
+            log.error("Error occurred on login. Message: {}", e.getMessage());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("list-events") // TODO: vrati sa jos jednom slikom dodatnom za cover CARD elementa u angular

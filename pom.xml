@@ -26,7 +26,8 @@
         <lombok.version>1.18.34</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <spring-security-core.version>6.3.4</spring-security-core.version>
-        <google.guava-version>33.3.1-jre</google.guava-version>
+        <JWT>0.12.6</JWT>
+        <AWS>2.2.6.RELEASE</AWS>
     </properties>
 
     <dependencies>
@@ -114,7 +115,28 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-aws-context</artifactId>
-            <version>2.2.6.RELEASE</version>
+            <version>${AWS}</version>
+        </dependency>
+
+        <!-- JWT Library -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>${JWT}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${JWT}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${JWT}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!--dependency for spring boot validation-->

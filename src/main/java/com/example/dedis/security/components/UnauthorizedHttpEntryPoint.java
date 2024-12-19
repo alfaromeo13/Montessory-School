@@ -1,4 +1,4 @@
-package com.example.dedis.security;
+package com.example.dedis.security.components;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
