@@ -6,14 +6,15 @@ import com.example.dedis.entities.Parent;
 import com.example.dedis.mappers.ChildMapper;
 import com.example.dedis.repositories.ChildRepository;
 import com.example.dedis.repositories.ParentRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ChildService {
 
     private final MailService mailSender;

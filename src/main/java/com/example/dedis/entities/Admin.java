@@ -1,6 +1,5 @@
 package com.example.dedis.entities;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 

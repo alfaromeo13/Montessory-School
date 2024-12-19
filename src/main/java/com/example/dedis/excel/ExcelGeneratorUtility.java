@@ -5,14 +5,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.List;
 
 @Slf4j
+@Component
 public class ExcelGeneratorUtility {
 
-    public static void employeeDetailReport(HttpServletResponse response, List<Child> children) {
+    public void employeeDetailReport(HttpServletResponse response, List<Child> children) {
+
         try (Workbook workbook = new XSSFWorkbook()) {
             Sheet sheet = workbook.createSheet("Children export example");
 

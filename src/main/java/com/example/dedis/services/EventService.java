@@ -11,18 +11,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class EventService {
 
     private final MailService mailService;
@@ -35,12 +35,13 @@ public class EventService {
         return eventRepository.getAllEventTitles();
     }
 
-    @Cacheable(value = "events", key = "#id")
-    public Optional<Event> getSpecificEvent(Long id){
-        return eventRepository.findById(id);
+    @Cacheable(cacheNames="event", key="#id")
+    public Event getSpecificEvent(Long id){
+        return eventRepository.findById(id).orElse(null);
     }
 
-    @CacheEvict(value="events", allEntries=true)
+    @Transactional
+    @CachePut(cacheNames = "event", key = "#result.id")
     public Event createEvent(EventDTO eventDTO, MultipartFile[] images) {
 
         String eventTitle = (String) eventDTO.getContent().get("title");
@@ -70,24 +71,20 @@ public class EventService {
         return eventRepository.save(eventMapper.toEntity(eventDTO));
     }
 
-    @CachePut(value = "events", key = "#id")
+    @Transactional
+    @CachePut(cacheNames = "event", key = "#id")
     public Event updateEvent(Long id, EventDTO eventDTO, MultipartFile[] images){
         eventDTO.setId(id);
         return createEvent(eventDTO,images);
     }
 
-    @CacheEvict(value="events", key="#id")
+    @Transactional
+    @CacheEvict(cacheNames = "event", key = "#id")
     public void cancelEvent(Long id){
         if(!eventRepository.existsById(id)) return;
         String eventTitle = eventRepository.eventTitle(id);
         imageService.deleteFiles(eventRepository.imageURLs(id));
         eventRepository.deleteById(id);
         mailService.sendCancelEventMessageToParents(eventTitle,parentRepository.findAll());
-    }
-
-    //every 12 hours we clean cache
-    @Scheduled(fixedRateString = "${caching.spring.eventsTTL}")
-    public void emptyHotelsCache() {
-        log.info("emptying event cache...");
     }
 }

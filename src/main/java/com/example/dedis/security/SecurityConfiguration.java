@@ -39,7 +39,11 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/login").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Protect other admin endpoints
+                        .requestMatchers(
+                                "/api/admin/**",
+                                "/api/event/create-event",
+                                "/api/event/update-event/{id}",
+                                "/api/event/cancel-event/{id}").hasRole("ADMIN") // Protect other admin endpoints
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().permitAll())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))

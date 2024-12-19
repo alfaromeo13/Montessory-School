@@ -5,6 +5,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MailService {
 
+    @Value("${application.admin.email}")
+    private String ADMIN_EMAIL;
+
     private final JavaMailSender mailSender;
 
     @SneakyThrows
     public void sendConfirmationEmail(String email, String childFullName) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom("jovanvukovic09@gmail.com");
+        helper.setFrom(ADMIN_EMAIL);
         helper.setTo(email);
         helper.setSubject("Successful Registration Confirmation");
         helper.setText(
@@ -47,7 +51,7 @@ public class MailService {
             try {
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                helper.setFrom("jovanvukovic09@gmail.com");
+                helper.setFrom(ADMIN_EMAIL);
                 helper.setTo(parent.getEmail());
                 helper.setSubject(eventTitle);
                 // Email Body
@@ -82,7 +86,7 @@ public class MailService {
             try {
                 MimeMessage message = mailSender.createMimeMessage();
                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                helper.setFrom("jovanvukovic09@gmail.com");
+                helper.setFrom(ADMIN_EMAIL);
                 helper.setTo(parent.getEmail());
                 helper.setSubject(eventTitle);
                 helper.setText(

@@ -8,6 +8,7 @@ import com.stripe.param.PaymentIntentCreateParams;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class DonationService {
     private final DonationRepository donationRepository;
 
     @SneakyThrows
+    @Transactional
     public PaymentResponseDTO createPaymentIntent(PaymentRequestDTO request) {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()

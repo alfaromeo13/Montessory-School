@@ -25,6 +25,8 @@
         <mysql-driver.version>9.1.0</mysql-driver.version>
         <lombok.version>1.18.34</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <java.cache>1.1.1</java.cache>
+        <ehcache>jakarta</ehcache>
         <spring-security-core.version>6.3.4</spring-security-core.version>
         <JWT>0.12.6</JWT>
         <AWS>2.2.6.RELEASE</AWS>
@@ -92,12 +94,25 @@
             <version>${stripe}</version>
         </dependency>
 
-
         <!--dependency for caching mechanism-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>${java.cache}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <classifier>${ehcache}</classifier>
+        </dependency>
+
+
 
         <!-- Two below dependencies are for security -->
         <dependency>
