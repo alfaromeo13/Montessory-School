@@ -25,5 +25,3 @@ public class Admin {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
-
-

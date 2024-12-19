@@ -5,7 +5,6 @@ import com.example.dedis.entities.Event;
 import com.example.dedis.excel.ExcelGeneratorUtility;
 import com.example.dedis.projections.EventProjection;
 import com.example.dedis.security.dto.LoginDTO;
-import com.example.dedis.security.jwt.JwtTokenProvider;
 import com.example.dedis.services.AdminService;
 import com.example.dedis.services.ChildService;
 import com.example.dedis.services.EventService;
@@ -17,10 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,32 +33,10 @@ public class AdminController {
     private final EventService eventService;
     private final AdminService adminService;
     private final ChildService childService;
-    private final JwtTokenProvider tokenProvider;
-    private final AuthenticationManager authenticationManager;
-
-    // TODO:
-    //  test all methods +
-    //  check if caching works
-    //  check if mail is sent properly
-    //  password renew for admin!
 
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO login) {
-        try {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    login.getUsername(),
-                    login.getPassword()
-            );
-
-            // this does all background logic for us. Checks users password with BCrypt
-            Authentication auth = authenticationManager.authenticate(authentication);
-            log.info("Authentication after successful login: {}", auth);
-            String JWT = tokenProvider.generateToken(auth);
-            return ResponseEntity.ok(JWT);
-        } catch (Exception e) {
-            log.error("Error occurred on login. Message: {}", e.getMessage());
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO){
+        return ResponseEntity.ok(adminService.login(loginDTO));
     }
 
     @GetMapping("list-events") // TODO: vrati sa jos jednom slikom dodatnom za cover CARD elementa u angular
