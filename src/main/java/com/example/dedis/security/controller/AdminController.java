@@ -1,5 +1,6 @@
 package com.example.dedis.security.controller;
 
+import com.example.dedis.dto.PasswordResetDTO;
 import com.example.dedis.excel.ExcelGeneratorUtility;
 import com.example.dedis.security.dto.LoginDTO;
 import com.example.dedis.services.AdminService;
@@ -8,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,6 @@ import java.util.Date;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    @Value("${application.admin.email}")
-    private String ADMIN_EMAIL;
-
     private final AdminService adminService;
     private final ChildService childService;
     private final ExcelGeneratorUtility excelGeneratorUtility;
@@ -38,13 +35,13 @@ public class AdminController {
 
     @PostMapping("/request-reset-password")
     public ResponseEntity<String> requestResetPassword(){
-        adminService.sendResetMail(ADMIN_EMAIL); //TODO finish in service ...
+        adminService.sendResetMail();
         return ResponseEntity.ok("Reset mail sent");
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> resetPassword(@RequestParam String code, @RequestParam String password){
-        if (adminService.changePassword(code, password))
+    public ResponseEntity<String> resetPassword(@RequestBody PasswordResetDTO passwordResetDTO){
+        if (adminService.changePassword(passwordResetDTO))
             return ResponseEntity.ok("Password changed successfully!");
         else return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
     }

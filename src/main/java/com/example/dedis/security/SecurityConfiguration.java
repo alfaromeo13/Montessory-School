@@ -40,7 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/admin/login").permitAll()
                         .requestMatchers(
-                                "/api/admin/**",
+                                "/api/admin/excel",
                                 "/api/event/create-event",
                                 "/api/event/update-event/{id}",
                                 "/api/event/cancel-event/{id}").hasRole("ADMIN") // Protect other admin endpoints

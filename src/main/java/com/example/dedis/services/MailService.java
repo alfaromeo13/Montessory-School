@@ -19,77 +19,62 @@ public class MailService {
     @Value("${application.admin.email}")
     private String ADMIN_EMAIL;
 
+    @Value("${application.frontend.reset-password-link}")
+    private String FRONTEND_RESET_PASSWORD_LINK;
+
     private final JavaMailSender mailSender;
 
     @SneakyThrows
     public void sendConfirmationEmail(String email, String childFullName) {
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom(ADMIN_EMAIL);
-        helper.setTo(email);
-        helper.setSubject("Successful Registration Confirmation");
-        helper.setText(
+
+        constructEmail(
+                "Successful Registration Confirmation",
+                email,
                 "<html>" +
-                        "<body>" +
-                        "<p>Dear Parent,</p>" +
-                        "<p>We are pleased to inform you that your child " + childFullName + " has been successfully registered in our school system.</p>" +
-                        "<p>You will receive notifications about upcoming school activities, events, and important updates.</p>" +
-                        "<p>Thank you for choosing <strong>Montessori School</strong> to support your child's educational journey.</p>" +
-                        "<br>" +
-                        "<p>Yours sincerely,</p>" +
-                        "<p><strong>The Montessori School Team</strong></p>" +
-                        "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' alt='Montessori Logo' style='width:150px;height:auto;'>" +
-                        "</body>" +
-                        "</html>",
-                true
+                "<body>" +
+                "<p>Dear Parent,</p>" +
+                "<p>We are pleased to inform you that your child " + childFullName + " has been successfully registered in our school system.</p>" +
+                "<p>You will receive notifications about upcoming school activities, events, and important updates.</p>" +
+                "<p>Thank you for choosing <strong>Montessori School</strong> to support your child's educational journey.</p>" +
+                "<br>" +
+                "<p>Yours sincerely,</p>" +
+                "<p><strong>The Montessori School Team</strong></p>" +
+                "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' alt='Montessori Logo' style='width:150px;height:auto;'>" +
+                "</body>" +
+                "</html>"
         );
-        mailSender.send(message);
+
     }
 
     public void sendNotificationToAllParents(String eventTitle,List<Parent> parents){
-        parents.forEach(parent -> {
-            try {
-                MimeMessage message = mailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                helper.setFrom(ADMIN_EMAIL);
-                helper.setTo(parent.getEmail());
-                helper.setSubject(eventTitle);
-                // Email Body
-                helper.setText(
-                        "<html>" +
-                                "<body>" +
-                                "<p>Dear Parents,</p>" +
-                                "<p>Montessori School is preparing a new event :</p>" +
-                                "<h3>" + eventTitle + "</h3>" +
-                                "<p>To learn more about this and other upcoming events, please visit our webpage:</p>" +
-                                "<p><a href='https://www.yourschoolwebpage.com/events'>Check Our Events</a></p>" +
-                                "<br>" +
-                                "<p>Thank you for being a part of <strong>Montessori School</strong>!</p>" +
-                                "<br>" +
-                                "<p>Yours sincerely,</p>" +
-                                "<p><strong>The Montessori School Team</strong></p>" +
-                                "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' " +
-                                "alt='Montessori Logo' style='width:150px;height:auto;'>" +
-                                "</body>" +
-                                "</html>",
-                        true // Enable HTML content
-                );
-                mailSender.send(message);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-        });
+
+        parents.forEach(parent -> constructEmail(
+                eventTitle,
+                parent.getEmail(),
+                "<html>" +
+                "<body>" +
+                "<p>Dear Parents,</p>" +
+                "<p>Montessori School is preparing a new event :</p>" +
+                "<h3>" + eventTitle + "</h3>" +
+                "<p>To learn more about this and other upcoming events, please visit our webpage:</p>" +
+                "<p><a href='https://www.yourschoolwebpage.com/events'>Check Our Events</a></p>" +
+                "<br>" +
+                "<p>Thank you for being a part of <strong>Montessori School</strong>!</p>" +
+                "<br>" +
+                "<p>Yours sincerely,</p>" +
+                "<p><strong>The Montessori School Team</strong></p>" +
+                "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' " +
+                "alt='Montessori Logo' style='width:150px;height:auto;'>" +
+                "</body>" +
+                "</html>"));
+
     }
 
     public void sendCancelEventMessageToParents(String eventTitle, List<Parent> parents) {
-        parents.forEach(parent -> {
-            try {
-                MimeMessage message = mailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                helper.setFrom(ADMIN_EMAIL);
-                helper.setTo(parent.getEmail());
-                helper.setSubject(eventTitle);
-                helper.setText(
+
+        parents.forEach(parent -> constructEmail(
+                eventTitle,
+                parent.getEmail(),
                 "<html>" +
                         "<body>" +
                         "<p>Dear Parents,</p>" +
@@ -106,13 +91,49 @@ public class MailService {
                         "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' " +
                         "alt='Montessori Logo' style='width:150px;height:auto;'>" +
                         "</body>" +
-                        "</html>",
-                true // Enable HTML content
-                );
-                mailSender.send(message);
-            } catch (MessagingException e) {
-                throw new RuntimeException(e);
-            }
-        });
+                        "</html>"));
+
+    }
+
+    public void sendResetPasswordMail(String resetCode) {
+
+        constructEmail(
+                "Reset password",
+                ADMIN_EMAIL,
+                 "<html>" +
+                "<body>" +
+                "<p>Dear Administrator,</p>" +
+                "<p>You have requested a password reset. Please use the following one-time code to reset your password:</p>" +
+                         "<h2 style='color:blue;'>" + resetCode + "</h2>" +
+                         "<p>To proceed with resetting your password, please click the link below:</p>" +
+                         "<p><a href='" + FRONTEND_RESET_PASSWORD_LINK + "' style='font-size:16px; color:#007BFF; text-decoration:none;'>" +
+                         "Reset Your Password</a></p>" +
+                "<p>This code is valid for a limited time. If you did not request a password reset, please disregard this message.</p>" +
+                "<br>" +
+                "<p>For any further assistance, feel free to contact the support team.</p>" +
+                "<br>" +
+                "<p>Yours sincerely,</p>" +
+                "<p><strong>The Support Team</strong></p>" +
+                "<img src='https://dedis.s3.eu-north-1.amazonaws.com/Montessori_logo.png' " +
+                "alt='Montessori Logo' style='width:150px;height:auto;'>" +
+                "</body>" +
+                "</html>"
+        );
+    }
+
+    private void constructEmail(String eventTitle,String emailSendingTo,String body) {
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+            helper.setFrom(ADMIN_EMAIL);
+            helper.setTo(emailSendingTo);
+            helper.setSubject(eventTitle);
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

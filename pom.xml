@@ -30,6 +30,7 @@
         <spring-security-core.version>6.3.4</spring-security-core.version>
         <JWT>0.12.6</JWT>
         <AWS>2.2.6.RELEASE</AWS>
+        <buddy>1.15.11</buddy>
     </properties>
 
     <dependencies>
@@ -112,7 +113,11 @@
             <classifier>${ehcache}</classifier>
         </dependency>
 
-
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>${buddy}</version>
+        </dependency>
 
         <!-- Two below dependencies are for security -->
         <dependency>
