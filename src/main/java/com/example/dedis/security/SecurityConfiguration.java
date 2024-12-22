@@ -33,6 +33,7 @@ public class SecurityConfiguration {
         return configuration.getAuthenticationManager();
     }
 
+    // TODO: enabluj samo dozvoljenne rute a sve ostalo  auth.anyRequest().authenticated();
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http

@@ -89,6 +89,7 @@
             <version>${poi-ooxml}</version>
         </dependency>
 
+        <!--dependency for stripe integration-->
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>

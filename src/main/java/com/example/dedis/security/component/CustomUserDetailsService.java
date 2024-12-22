@@ -1,4 +1,4 @@
-package com.example.dedis.security.components;
+package com.example.dedis.security.component;
 
 import com.example.dedis.entities.Admin;
 import com.example.dedis.repositories.AdminRepository;
