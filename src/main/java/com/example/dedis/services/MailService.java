@@ -22,6 +22,9 @@ public class MailService {
     @Value("${application.frontend.reset-password-link}")
     private String FRONTEND_RESET_PASSWORD_LINK;
 
+    @Value("${application.frontend.events-link}")
+    private String EVENTS_LINK;
+
     private final JavaMailSender mailSender;
 
     @SneakyThrows
@@ -43,7 +46,6 @@ public class MailService {
                 "</body>" +
                 "</html>"
         );
-
     }
 
     public void sendNotificationToAllParents(String eventTitle,List<Parent> parents){
@@ -57,7 +59,7 @@ public class MailService {
                 "<p>Montessori School is preparing a new event :</p>" +
                 "<h3>" + eventTitle + "</h3>" +
                 "<p>To learn more about this and other upcoming events, please visit our webpage:</p>" +
-                "<p><a href='https://www.yourschoolwebpage.com/events'>Check Our Events</a></p>" +
+                "<p><a href='"+EVENTS_LINK+"'>Check Our Events</a></p>" +
                 "<br>" +
                 "<p>Thank you for being a part of <strong>Montessori School</strong>!</p>" +
                 "<br>" +
@@ -82,7 +84,7 @@ public class MailService {
                         "<h3>" + eventTitle + "</h3>" +
                         "<p>We apologize for any inconvenience this may cause and appreciate your understanding.</p>" +
                         "<p>For updates on other upcoming events, please visit our webpage:</p>" +
-                        "<p><a href='https://www.yourschoolwebpage.com/events'>Check Our Events</a></p>" +
+                        "<p><a href='"+EVENTS_LINK+"'>Check Our Events</a></p>" +
                         "<br>" +
                         "<p>Thank you for being a part of <strong>Montessori School</strong>!</p>" +
                         "<br>" +

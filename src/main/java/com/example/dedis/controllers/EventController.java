@@ -29,8 +29,10 @@ public class EventController {
     @GetMapping("get-event/{eventId}")
     public ResponseEntity<Event> getSpecificEvent(@PathVariable Long eventId){
         var res = eventService.getSpecificEvent(eventId);
-        if (res == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return res.map(event
+                -> new ResponseEntity<>(event, HttpStatus.OK)).orElseGet(()
+                -> new ResponseEntity<>(HttpStatus.NOT_FOUND)
+        );
     }
 
     @SneakyThrows
@@ -41,8 +43,9 @@ public class EventController {
         return new ResponseEntity<>(eventService.createEvent(eventDTO,images),HttpStatus.CREATED);
     }
 
+    // TODO: radi ali lose slike updejtjuje sve stavlja u prvi niz uopste ne ide u naredni. Vidji radi kli i za kreiranje isto
     @SneakyThrows
-    @PostMapping("update-event/{id}")
+    @PutMapping("update-event/{id}")
     public ResponseEntity<Event> updateEvent(
             @PathVariable Long id,
             @RequestParam String payload,

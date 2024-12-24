@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -35,9 +36,9 @@ public class EventService {
         return eventRepository.getAllEvents();
     }
 
-    @Cacheable(cacheNames="event", key="#id")
-    public Event getSpecificEvent(Long id){
-        return eventRepository.findById(id).orElse(null);
+    @Cacheable(cacheNames="event", key="#id", unless = "#result == null")
+    public Optional<Event> getSpecificEvent(Long id){
+        return eventRepository.findById(id);
     }
 
     @Transactional

@@ -14,16 +14,16 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = """
         SELECT e.id AS id,
                JSON_UNQUOTE(JSON_EXTRACT(e.content_blocks, '$.title')) AS title,
-               (SELECT JSON_UNQUOTE(j.images)
-                FROM JSON_TABLE(e.content_blocks, '$.contentBlocks[*]'
-                    COLUMNS (
-                        type VARCHAR(50) PATH '$.type',
-                        images JSON PATH '$.values'
-                    )
-                ) AS j
-                WHERE j.type = 'image' LIMIT 1) AS image
+       (SELECT JSON_UNQUOTE(JSON_EXTRACT(j.images, '$[0]'))  -- Extract only the first image
+        FROM JSON_TABLE(e.content_blocks, '$.contentBlocks[*]'
+            COLUMNS (
+                type VARCHAR(50) PATH '$.type',
+                images JSON PATH '$.values'
+            )
+        ) AS j WHERE j.type = 'image' LIMIT 1) AS image
         FROM event e
-        """, nativeQuery = true)
+        ORDER BY e.id DESC
+       """, nativeQuery = true)
     List<EventProjection> getAllEvents();
 
     @Query(value = """
