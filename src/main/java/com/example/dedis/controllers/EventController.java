@@ -43,7 +43,6 @@ public class EventController {
         return new ResponseEntity<>(eventService.createEvent(eventDTO,images),HttpStatus.CREATED);
     }
 
-    // TODO: radi ali lose slike updejtjuje sve stavlja u prvi niz uopste ne ide u naredni. Vidji radi kli i za kreiranje isto
     @SneakyThrows
     @PutMapping("update-event/{id}")
     public ResponseEntity<Event> updateEvent(
