@@ -50,7 +50,7 @@ public class EventController {
             @RequestParam String payload,
             @RequestParam(value="image", required = false) MultipartFile[] images) {
         EventDTO eventDTO = new ObjectMapper().readValue(payload, EventDTO.class);
-        return new ResponseEntity<>(eventService.updateEvent(id,eventDTO,images),HttpStatus.CREATED);
+        return new ResponseEntity<>(eventService.updateEvent(id,eventDTO,images),HttpStatus.OK);
     }
 
     @DeleteMapping("cancel-event/{id}")
