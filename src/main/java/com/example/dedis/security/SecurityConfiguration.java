@@ -33,20 +33,22 @@ public class SecurityConfiguration {
         return configuration.getAuthenticationManager();
     }
 
-    // TODO: enabluj samo dozvoljenne rute a sve ostalo  auth.anyRequest().authenticated();
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/admin/login").permitAll()
                         .requestMatchers(
-                                "/api/admin/excel",
-                                "/api/event/create-event",
-                                "/api/event/update-event/{id}",
-                                "/api/event/cancel-event/{id}").hasRole("ADMIN") // Protect other admin endpoints
+                                "/api/child",
+                                "/api/admin/login",
+                                "/api/admin/request-reset-password",
+                                "/api/admin/reset-password",
+                                "/api/donation/create-payment-intent",
+                                "/api/event/list-events",
+                                "/api/event/get-event/{eventId}"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)

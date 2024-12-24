@@ -1,14 +1,14 @@
 package com.example.dedis.services;
 
+import com.example.dedis.dto.PaymentRequestDTO;
 import com.example.dedis.mappers.DonationMapper;
 import com.example.dedis.repositories.DonationRepository;
-import com.stripe.model.Charge;
+import com.stripe.model.PaymentIntent;
+import com.stripe.param.PaymentIntentCreateParams;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -18,14 +18,20 @@ public class DonationService {
     private final DonationMapper donationMapper;
     private final DonationRepository donationRepository;
 
-    public Charge chargeCreditCard(String token, double amount) throws Exception {
-        Map<String, Object> chargeParams = new HashMap<>();
-        chargeParams.put("amount", (int)(amount * 100)); // stripe expects amount in cents.
-        chargeParams.put("currency", "EUR");
-        chargeParams.put("source", token);
-        //  donationRepository.save(donationMapper.toEntity(request));
-        log.info("DONE! :D");
-        return Charge.create(chargeParams);
-    }
+    @SneakyThrows
+    public String donate(PaymentRequestDTO paymentRequestDTO) {
 
+        PaymentIntentCreateParams params =
+                PaymentIntentCreateParams.builder()
+                        .setAmount(paymentRequestDTO.getAmount())
+                        .setCurrency("usd")
+                        .build();
+
+        PaymentIntent intent = PaymentIntent.create(params);
+
+        donationRepository.save(donationMapper.toEntity(paymentRequestDTO));
+
+        log.info("Payment done successfully :)");
+        return intent.getClientSecret();
+    }
 }

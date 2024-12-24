@@ -6,14 +6,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableWebMvc
-@Configuration // todo: add appropriate values
+@Configuration
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedHeaders("*")
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+        registry.addMapping("/**") // Apply to all endpoints
+                .allowedOrigins("*") // todo: Restrict to calls from render.com
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS") // Restrict HTTP methods
                 .allowedOrigins("*")
-                .exposedHeaders("Access-Control-Allow-Origin, Access-Control-Allow-Credentials, FILE-NAME");
+                .exposedHeaders("*");
     }
 }

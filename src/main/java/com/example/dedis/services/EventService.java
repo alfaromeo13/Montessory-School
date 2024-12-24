@@ -32,7 +32,7 @@ public class EventService {
     private final ParentRepository parentRepository;
 
     public List<EventProjection> getAllEvents(){
-        return eventRepository.getAllEventTitles();
+        return eventRepository.getAllEvents();
     }
 
     @Cacheable(cacheNames="event", key="#id")

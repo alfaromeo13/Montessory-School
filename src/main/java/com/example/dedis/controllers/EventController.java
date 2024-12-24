@@ -21,8 +21,8 @@ public class EventController {
 
     private final EventService eventService;
 
-    @GetMapping("list-events") // TODO: vrati sa jos jednom slikom dodatnom za cover CARD elementa u angular
-    public ResponseEntity<List<EventProjection>> getEventName(){
+    @GetMapping("list-events")
+    public ResponseEntity<List<EventProjection>> allEvents(){
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 

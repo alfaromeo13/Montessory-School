@@ -12,11 +12,19 @@ import java.util.List;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
     @Query(value = """
-                    select e.id as id,
-                        JSON_UNQUOTE(JSON_EXTRACT(e.content_blocks, '$.title')) as title
-                    from event e
-                    """, nativeQuery = true)
-    List<EventProjection> getAllEventTitles();
+        SELECT e.id AS id,
+               JSON_UNQUOTE(JSON_EXTRACT(e.content_blocks, '$.title')) AS title,
+               (SELECT JSON_UNQUOTE(j.images)
+                FROM JSON_TABLE(e.content_blocks, '$.contentBlocks[*]'
+                    COLUMNS (
+                        type VARCHAR(50) PATH '$.type',
+                        images JSON PATH '$.values'
+                    )
+                ) AS j
+                WHERE j.type = 'image' LIMIT 1) AS image
+        FROM event e
+        """, nativeQuery = true)
+    List<EventProjection> getAllEvents();
 
     @Query(value = """
                     select
