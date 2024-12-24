@@ -88,4 +88,8 @@ public class EventService {
         eventRepository.deleteById(id);
         mailService.sendCancelEventMessageToParents(eventTitle,parentRepository.findAll());
     }
+
+    public boolean exists(Long id){
+        return eventRepository.existsById(id);
+    }
 }

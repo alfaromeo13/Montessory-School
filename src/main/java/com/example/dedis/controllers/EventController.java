@@ -49,6 +49,9 @@ public class EventController {
             @PathVariable Long id,
             @RequestParam String payload,
             @RequestParam(value="image", required = false) MultipartFile[] images) {
+
+        if(!eventService.exists(id)) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
         EventDTO eventDTO = new ObjectMapper().readValue(payload, EventDTO.class);
         return new ResponseEntity<>(eventService.updateEvent(id,eventDTO,images),HttpStatus.OK);
     }
