@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Apply to all endpoints
-                .allowedOrigins("*") // todo: Restrict to calls from render.com
+                .allowedOrigins("*") // todo: Restrict to calls from render.com PUT FRONTEND LINK
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS") // Restrict HTTP methods
                 .allowedOrigins("*")
                 .exposedHeaders("*");
