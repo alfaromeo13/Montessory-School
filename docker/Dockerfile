@@ -10,5 +10,7 @@ VOLUME /tmp
 # Copy all JAR files from the target directory into the container as app.jar
 COPY target/*.jar /app/dedis.jar
 
+EXPOSE 8080
+
 # Specify the command to run on container startup
 ENTRYPOINT ["java", "-jar", "/app/dedis.jar"]
