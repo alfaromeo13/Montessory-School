@@ -12,6 +12,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Value("${application.frontend.render-link}")
     private String frontendLink;
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Apply to all endpoints
