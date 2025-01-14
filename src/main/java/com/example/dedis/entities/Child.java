@@ -2,6 +2,7 @@ package com.example.dedis.entities;
 
 import com.example.dedis.enums.Gender;
 import com.example.dedis.enums.Grade;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -48,6 +49,7 @@ public class Child {
     @Column(nullable = false)
     private String city;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }

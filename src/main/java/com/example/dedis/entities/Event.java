@@ -1,6 +1,7 @@
 package com.example.dedis.entities;
 
 import com.example.dedis.entities.converter.JpaJsonConverter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,9 +21,11 @@ public class Event implements Serializable {
     @Convert(converter = JpaJsonConverter.class)
     private Map<String, Object> content = new HashMap<>();
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "event_date", nullable = false, updatable = false)
     private LocalDateTime eventDate = LocalDateTime.now();
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }

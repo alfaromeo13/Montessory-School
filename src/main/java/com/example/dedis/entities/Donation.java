@@ -1,5 +1,6 @@
 package com.example.dedis.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class Donation {
     @Column(columnDefinition = "TEXT")
     private String message;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }
