@@ -24,7 +24,7 @@ public class DonationService {
         PaymentIntentCreateParams params =
                 PaymentIntentCreateParams.builder()
                         .setAmount(paymentRequestDTO.getAmount())
-                        .setCurrency("usd")
+                        .setCurrency("eur")
                         .build();
 
         PaymentIntent intent = PaymentIntent.create(params);
