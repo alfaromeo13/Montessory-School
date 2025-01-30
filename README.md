@@ -1,11 +1,11 @@
 # Architecture 
-You can check out the demo of the deployed application ![here](https://montessori-ui.vercel.app/)! 🚀🔗✨
+You can check out the demo of the deployed application [here](https://montessori-ui.vercel.app/)! 🚀🔗✨
 
 ![arch](show/archite.png)
 
-Frontend layer is deployed on ![Vercel](https://vercel.com/) platform<br/>
-Backend layer is deployed on ![Render](https://render.com/) platform<br/>
-Database layer is deployed on ![Aiven](https://aiven.io/) platform<br/>
+Frontend layer is deployed on [Vercel](https://vercel.com/) platform<br/>
+Backend layer is deployed on [Render](https://render.com/) platform<br/>
+Database layer is deployed on [Aiven](https://aiven.io/) platform<br/>
 
 # Documentation
 ![arch](show/kk-1.png)
