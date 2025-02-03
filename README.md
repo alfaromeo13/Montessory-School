@@ -1,7 +1,7 @@
 # Architecture 
 You can check out the demo of the deployed application [here](https://montessori-ui.vercel.app/)! 🚀🔗✨
 
-![arch](show/archite.png)
+![arch](show/architecture.svg)
 
 Frontend layer is deployed on [Vercel](https://vercel.com/) platform<br/>
 Backend layer is deployed on [Render](https://render.com/) platform<br/>
